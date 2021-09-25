@@ -1,11 +1,13 @@
-﻿"Case Senstive" = False
+﻿"Case Senstive" = True
 "Start Symbol"  = <Program>
                 
 id     = {Letter} ({Letter} | {Digit} | [_] )*
 number = {Digit}+ ('.'{Digit}+)?
+boolean   = verdadeiro | falso
 Comment Start = '{#'
 Comment End   = '#}'
 Comment Line  = '%'
+
 
 !-------------------------------------------------------------
 !Start of the program
@@ -25,7 +27,7 @@ Comment Line  = '%'
 
 !-------------------------------------------------------------
 ! Values Type
-<value>  ::= number | verdadeiro | falso
+<value>  ::= number | boolean
 !-------------------------------------------------------------
 
 
@@ -88,4 +90,50 @@ Comment Line  = '%'
 <function_body1>        ::= <declaration_var>   <function_body2> | <function_body2>
 <function_body2>        ::= retorno                    !- ATENÇÃO: Falta colocar o que será retornado.
 !-------------------------------------------------------------
-<teste>
+! Comand enquanto
+<com_enquanto> ::= enquanto '(' <args> ')' '{}'
+<args> ::= <exprRel> | <exprLog0> | boolean |
+!-------------------------------------------------------------
+
+!-------------------------------------------------------------
+!Comand para
+<com_para> ::= para '(' <init> ';'  <stop> ';'  <step>  ')' '{}'
+<init> ::= <exprRel> 
+<stop> ::= <exprRel> | <exprRel> | boolean |
+<step> ::= <exprRel> | <exprLog0> |
+!-------------------------------------------------------------
+
+!-------------------------------------------------------------
+!Arithmetic Expressions
+<exprValorMod> ::= IDE | NRO
+<exprValor> ::= <operatorSoma> <exprValorMod> | <exprValorMod> | '('<expr>')'
+<exprMulti0> ::=  <exprValor> <exprMultiPos>
+<exprMulti> ::= <exprValor> <operatorMulti> <exprMulti0>
+<expr>   ::= <exprMulti> <exprMultiPos> <expr2> | NRO <expr2> | IDE <expr1> | '('<expr>')' <expr2> | <operatorAuto> IDE <expr2>
+<exprMultiPos> ::= <operatorMulti> <exprMulti0> | <>
+<expr1> ::= <operatorSoma><expr> | <operatorAuto><expr2> | <>
+<expr2> ::= <operatorSoma><expr> | <>
+!<expr3> ::= <expr1> | <>
+!<expr4> ::= <expr2> | <>
+<operatorSoma> ::= '+' | '-'
+<operatorMulti> ::= '*' | '/' 
+<operatorAuto> ::= '++' | '--'
+!--------------------------------------------------------------
+
+!--------------------------------------------------------------
+!Relational Expressions
+<exprRelValor> ::= <expr> | boolean |
+<exprRel>   ::= <exprRelValor> <operatorRel> <exprRel> | '(' <exprRel> ')' <exprRel2>
+<exprRel1> ::= <exprRelValor> <exprRel2> | '(' <exprRel> ')' <exprRel2>
+<exprRel2> ::= <operatorRel><exprRel1> | <>
+<operatorRel> ::= '==' | '>=' | '<=' | '!='
+!--------------------------------------------------------------
+
+!--------------------------------------------------------------
+!Logical Expressions
+<exprLogValor> ::= <exprRel> | boolean |
+<exprLog0>   ::= <exprLogValor> <operatorLog> <exprLog> | '(' <exprLog0> ')' <exprLog1>
+<exprLog> ::= <exprLogValor> <exprLog1> | '(' <exprLog> ')' <exprLog1>
+<exprLog1> ::= <operatorLog><exprLog> | <>
+<operatorLog> ::= '!' | '&&' | '||'
+!--------------------------------------------------------------
