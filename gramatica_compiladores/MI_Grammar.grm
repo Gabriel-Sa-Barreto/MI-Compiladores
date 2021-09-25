@@ -88,3 +88,4 @@ Comment Line  = '%'
 <function_body1>        ::= <declaration_var>   <function_body2> | <function_body2>
 <function_body2>        ::= retorno                    !- ATENÇÃO: Falta colocar o que será retornado.
 !-------------------------------------------------------------
+<teste>
