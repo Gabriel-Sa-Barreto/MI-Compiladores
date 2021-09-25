@@ -1,15 +1,16 @@
-﻿"Case Senstive" = False
+﻿"Case Senstive" = 'True'
 "Start Symbol"  = <Program>
                 
-id     = {Letter} ({Letter} | {Digit} | [_] )*
-number = {Digit}+ ('.'{Digit}+)?
+id     = {Letter}({AlphaNumeric}|'_')*
+number = {Number}+('.'{Number}+)?
+
 Comment Start = '{#'
 Comment End   = '#}'
 Comment Line  = '%'
 
 !-------------------------------------------------------------
 !Start of the program
-<Program> ::= <declaration_const> <declaration_var> <function_declaration> 
+<Program> ::= <declaration_const> <declaration_var> <function_declaration> | <expressao> ! para testar expressao
 !-------------------------------------------------------------
 
 !------------------------------------------------------------ 
@@ -19,7 +20,7 @@ Comment Line  = '%'
 
 !-------------------------------------------------------------
 ! Primitive Types or New Types
-<primitive_type> ::= inteiro | real | booleano | char | cadeia | vazio
+<primitive_type> ::= 'inteiro' | 'real' | 'booleano' | 'char' | 'cadeia' | 'vazio'
 <type>           ::= <primitive_type> | id            
 !-------------------------------------------------------------
 
@@ -87,4 +88,41 @@ Comment Line  = '%'
 <function_body>         ::= <declaration_const> <function_body1> | <function_body1>
 <function_body1>        ::= <declaration_var>   <function_body2> | <function_body2>
 <function_body2>        ::= retorno                    !- ATENÇÃO: Falta colocar o que será retornado.
+!-------------------------------------------------------------
+
+
+!-------------------------------------------------------------
+! expressões
+<expressao> ::= <expr> | <exprRel> | <exprLog>
+
+! Expressões Aritméticas: !
+!<expr0> ::= number <expr2> | id <expr1> | '('<expr>')' <expr4> | <operatorAuto> id <expr4> ! acho que no fim das contas não precisa, um 5 solto em qualquer lugar seria uma exp
+<exprValorMod> ::= id | number
+<exprValor> ::= <operatorSoma> <exprValorMod> | <exprValorMod> | '('<expr>')'
+<exprMulti0> ::=  <exprValor> <exprMultiPos>
+<exprMulti> ::= <exprValor> <operatorMulti> <exprMulti0>
+<expr>   ::= <exprMulti> <exprMultiPos> <expr2> | number <expr2> | id <expr1> | '('<expr>')' <expr2> | <operatorAuto> id <expr2>
+<exprMultiPos> ::= <operatorMulti> <exprMulti0> | <>
+<expr1> ::= <operatorSoma><expr> | <operatorAuto><expr2> | <>
+<expr2> ::= <operatorSoma><expr> | <>
+<operatorSoma> ::= '+' | '-'
+<operatorMulti> ::= '*' | '/' 
+<operatorAuto> ::= '++' | '--'
+
+
+! Expressões Relacionais: !
+! o valor da comparação relacional pode ser uma expressão aritmética o que comtempla o valor unico de id e number
+<exprRelValor> ::= <expr> | 'verdadeiro' | 'falso' | 'vazio'
+<exprRel>   ::= <exprRelValor> <operatorRel> <exprRel1> | '(' <exprRel> ')' <exprRel2>
+<exprRel1> ::= <exprRelValor> <exprRel2> | '(' <exprRel> ')' <exprRel2>
+<exprRel2> ::= <operatorRel><exprRel1> | <>
+<operatorRel> ::= '==' | '>=' | '<=' | '!='
+
+! Expressões Logicas: !
+! o valor da comparação logica pode ser uma expressão relacional que por sua vez pode ser uma expressão aritmética o que comtempla o valor unico de id e number
+<exprLogValor> ::= <exprRel> | 'verdadeiro' | 'falso' | 'vazio'
+<exprLog>   ::= <exprLogValor> <operatorLog> <exprLog1> | '(' <exprLog> ')' <exprLog2>
+<exprLog1> ::= <exprLogValor> <exprLog2> | '(' <exprLog1> ')' <exprLog2>
+<exprLog2> ::= <operatorLog><exprLog1> | <>
+<operatorLog> ::= '!' | '&&' | '||'
 !-------------------------------------------------------------
