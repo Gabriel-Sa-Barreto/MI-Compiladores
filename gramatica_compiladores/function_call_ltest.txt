@@ -1,0 +1,1 @@
+chamar_funcao(a, matriz[a][2], 2, b[2], pessoa.a, pessoa.a[2].b[2], teste.matriz[a][b], teste_a);
