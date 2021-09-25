@@ -3,6 +3,7 @@
                 
 id     = {Letter}({AlphaNumeric}|'_')*
 number = {Number}+('.'{Number}+)?
+cad    = '"'( {AlphaNumeric}| [!#$%&()*+,-./:;<=>?@\^_`{|}~]|'['|']' | '\"' )* '"'
 
 Comment Start = '{#'
 Comment End   = '#}'
@@ -26,7 +27,7 @@ Comment Line  = '%'
 
 !-------------------------------------------------------------
 ! Values Type
-<value>  ::= number | verdadeiro | falso
+<value>  ::= number | verdadeiro | falso | cad
 !-------------------------------------------------------------
 
 
