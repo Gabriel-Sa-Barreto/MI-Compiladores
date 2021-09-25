@@ -1,4 +1,4 @@
-﻿"Case Senstive" = True
+﻿"Case Sensitive" = True
 "Start Symbol"  = <Program>
                 
 id     = {Letter} ({Letter} | {Digit} | [_] )*
