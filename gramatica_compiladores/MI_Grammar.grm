@@ -1,8 +1,10 @@
 ﻿"Case Sensitive" = True
 "Start Symbol"  = <Program>
                 
+
 id     = {Letter} ({Letter} | {Digit} | [_] )*
 number = {Digit}+ ('.'{Digit}+)?
+cad    = '"'( {AlphaNumeric}| [!#$%&()*+,-./:;<=>?@\^_`{|}~]|'['|']' | '\"' )* '"'
 Comment Start = '{#'
 Comment End   = '#}'
 Comment Line  = '%'
@@ -26,7 +28,7 @@ Comment Line  = '%'
 
 !-------------------------------------------------------------
 ! Values Type
-<value_without_IDE>  ::= number | verdadeiro | falso
+<value_without_IDE>  ::= number | verdadeiro | falso | cad
 <value_with_IDE>     ::= <value_without_IDE> | id
 !-------------------------------------------------------------
 
