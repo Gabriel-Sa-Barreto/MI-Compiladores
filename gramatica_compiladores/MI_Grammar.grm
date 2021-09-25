@@ -4,7 +4,7 @@
 id     = {Letter}({AlphaNumeric}|'_')*
 number = {Number}+('.'{Number}+)?
 cad    = '"'( {AlphaNumeric}| [!#$%&()*+,-./:;<=>?@\^_`{|}~]|'['|']' | '\"' )* '"'
-boolean = verdadeiro | falso
+boolean = 'verdadeiro' | 'falso'
                 
 Comment Start = '{#'
 Comment End   = '#}'
@@ -13,7 +13,7 @@ Comment Line  = '%'
 
 !-------------------------------------------------------------
 !Start of the program
-<Program> ::= <declaration_const> <declaration_var> <function_declaration> | <expressao> | <com_enquanto> | <com_para>! para testar expressao
+<Program> ::= <declaration_const> <declaration_var> <function_declaration> | <expressao> ! para testar expressao
 !-------------------------------------------------------------
 
 !------------------------------------------------------------ 
@@ -90,21 +90,21 @@ Comment Line  = '%'
 ! Declaration of Function Body
 <function_body>         ::= <declaration_const> <function_body1> | <function_body1>
 <function_body1>        ::= <declaration_var>   <function_body2> | <function_body2>
-<function_body2>        ::= retorno                    !- ATENÇÃO: Falta colocar o que será retornado.
+<function_body2>        ::= <com_enquanto> <function_body2> | <com_para> <function_body2> | retorno                    !- ATENÇÃO: Falta colocar o que será retornado.
 !-------------------------------------------------------------
 
 !-------------------------------------------------------------
 ! Comand enquanto
-<com_enquanto> ::= enquanto '(' <args> ')' '{}'
+<com_enquanto> ::= enquanto '(' <args> ')' '{' '}'
 <args> ::= <exprRel> | <exprLog> | boolean |
 !-------------------------------------------------------------
 
 !-------------------------------------------------------------
 !Comand para
-<com_para> ::= para '(' <init> ';'  <stop> ';'  <step>  ')' '{}'
+<com_para> ::= para '(' <init> ';'  <stop> ';'  <step>  ')' '{' '}'
 <init> ::= <exprRel> 
 <stop> ::= <exprRel> | <exprRel> | boolean |
-<step> ::= <exprRel> | <exprLog> |
+<step> ::= <exprRel> | <expr> |
 !-------------------------------------------------------------
 
 !-------------------------------------------------------------
