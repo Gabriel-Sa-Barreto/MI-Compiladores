@@ -164,3 +164,14 @@ Comment Line  = '%'
 <se_senao_body>     ::= <se_intern_body> | <se_intern_body> <senao> | <se_intern_body> <se_senao>
 <senao>             ::= 'senao' '{' <se_intern_body>
 !-------------------------------------------------------------
+
+!-------------------------------------------------------------
+! Leia e escreva
+<write_cmd>   ::= escreva '(' <write_value> ')' ';'
+<write_value_list> ::= ',' <write_value> <write_value_list> |
+<write_value> ::= id | num | cad | <vector_matrix> | <elem_registro>
+
+<read_cmd> ::= leia '(' <read_value> ')' ';'
+<read_value_list> ::= ',' <read_value> <read_value_list> |
+<read_value> ::= id | <vector_matrix> | <elem_registro>
+!-------------------------------------------------------------
