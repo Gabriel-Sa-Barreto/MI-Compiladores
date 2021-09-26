@@ -1,18 +1,17 @@
-﻿"Case Sensitive" = True
+﻿"Case Senstive" = 'True'
 "Start Symbol"  = <Program>
                 
-
-id     = {Letter} ({Letter} | {Digit} | [_] )*
-number = {Digit}+ ('.'{Digit}+)?
+id     = {Letter}({AlphaNumeric}|'_')*
+number = {Number}+('.'{Number}+)?
 cad    = '"'( {AlphaNumeric}| [!#$%&()*+,-./:;<=>?@\^_`{|}~]|'['|']' | '\"' )* '"'
+
 Comment Start = '{#'
 Comment End   = '#}'
 Comment Line  = '%'
 
 !-------------------------------------------------------------
 !Start of the program
-<Program> ::= <declaration_const> <declaration_var> <function_declaration> | <expressao> !- <expressao> aqui é somente para testar.
-!- <Program> ::= <functionCall> <Program> |                          !- TESTE DA CHAMADA DE FUNÇÃO.
+<Program> ::= <declaration_const> <declaration_var> <function_declaration> | <expressao> ! para testar expressao
 !-------------------------------------------------------------
 
 !------------------------------------------------------------ 
@@ -22,21 +21,21 @@ Comment Line  = '%'
 
 !-------------------------------------------------------------
 ! Primitive Types or New Types
-<primitive_type> ::= inteiro | real | booleano | char | cadeia | vazio
+<primitive_type> ::= 'inteiro' | 'real' | 'booleano' | 'char' | 'cadeia' | 'vazio'
 <type>           ::= <primitive_type> | id            
 !-------------------------------------------------------------
 
 !-------------------------------------------------------------
 ! Values Type
-<value_without_IDE>  ::= number | verdadeiro | falso | cad
-<value_with_IDE>     ::= <value_without_IDE> | id
+<value>  ::= number | verdadeiro | falso | cad
 !-------------------------------------------------------------
+
 
 !-------------------------------------------------------------
 ! Variables Block
 <declaration_var>  ::= variaveis '{' <declaration_var1>
 <declaration_var1> ::= <type> id <declaration_var2> | '}'
-<declaration_var2> ::= '=' <value_with_IDE> <declaration_var3> | <vector_matrix> | <declaration_var3>
+<declaration_var2> ::= '=' <value> <declaration_var3> | <vector_matrix> | <declaration_var3>
 <declaration_var3> ::= ',' id <declaration_var2>  | ';' <declaration_var1>                               
 !-------------------------------------------------------------
 
@@ -47,24 +46,25 @@ Comment Line  = '%'
 !- b[4], c[4];
 !- a[2][2];
 !- a[2][2] = [0,1,3; 4,5,6; 7,8,9]
+
 <vector_matrix>   ::= '[' number ']' <vector_matrix_1>
 <vector_matrix_1> ::= '[' number ']' <vector_matrix_2> | '=' <init_vector> <declaration_var3> | <declaration_var3>  !- Declara uma matriz ou inicializa o vetor ou finaliza a declaração. 
 <vector_matrix_2> ::= '=' <init_matrix> <declaration_var3> | <declaration_var3>                                     !- Inicializa a matriz ou finaliza a declaração. 
 
 <init_matrix>     ::= '[' <init_matrix_1>
-<init_matrix_1>   ::=     <value_with_IDE> <init_matrix_2>                         !- Insere um valor para uma posição da matriz.                             
+<init_matrix_1>   ::=     <value> <init_matrix_2>                                  !- Insere um valor para uma posição da matriz.                             
 <init_matrix_2>   ::= ',' <init_matrix_1> | ';' <init_matrix_1> | ']'              !- Após a inserção de um valor, pode vir um ';' ou ',' ou ']' para finalizar.
 
 <init_vector>     ::= '[' <init_vector_1>
-<init_vector_1>   ::=     <value_with_IDE> <init_vector_2>                         !- Insere um valor para uma posição do vetor.                             
+<init_vector_1>   ::=     <value> <init_vector_2>                                  !- Insere um valor para uma posição do vetor.                             
 <init_vector_2>   ::= ',' <init_vector_1> | ']'                                    !- Após a inserção de um valor, pode vir uma ',' ou ']' para finalizar.
 !-------------------------------------------------------------
 
 !-------------------------------------------------------------
 ! Constants Block
 <declaration_const>  ::= constantes '{' <declaration_const1>
-<declaration_const1> ::= <primitive_type> id '=' <value_without_IDE> <declaration_const2> | '}'
-<declaration_const2> ::= ',' id '=' <value_without_IDE> <declaration_const2> | ';' <declaration_const1>
+<declaration_const1> ::= <primitive_type> id '=' <value> <declaration_const2> | '}'
+<declaration_const2> ::= ',' id '=' <value> <declaration_const2> | ';' <declaration_const1>
 !-------------------------------------------------------------
 
 !-------------------------------------------------------------
@@ -91,28 +91,6 @@ Comment Line  = '%'
 <function_body2>        ::= retorno                    !- ATENÇÃO: Falta colocar o que será retornado.
 !-------------------------------------------------------------
 
-!-------------------------------------------------------------
-!- Function Call
-<functionCall> ::= id '(' <varList0>
-<varList0>     ::= <value_without_IDE> <varList2> | id <varList1> 
-<varList1>     ::= <varList2>     | <v_m_access> <varList2> | <elem_registro> <varList2>     !- O identificador pode ser de uma variável, vetor, matriz ou acesso de algum registro.
-<varList2>     ::= ',' <varList0> | ')' ';'                                                  !- Finaliza a lista de parâmetros ou continua com a declaração.
-!-------------------------------------------------------------
-
-!-------------------------------------------------------------
-!- Vector and Matrix access
-<v_m_access>   ::= '[' <v_m_access1>
-<v_m_access1>  ::= id  <v_m_access2>                    | number ']' <v_m_access3>                         !- <v_m_access3> é para verificar se irá usar uma matriz  
-<v_m_access2>  ::= <elem_registro> ']' <v_m_access3>    | ']'        <v_m_access3>                         !- <v_m_access3> é para verificar se irá usar uma matriz 
-<v_m_access3>  ::= '[' <v_m_access1> |    
-!-------------------------------------------------------------
-
-!-------------------------------------------------------------
-!- Registry Access
-<elem_registro>         ::= '.' id <nested_elem_registro>
-<nested_elem_registro>  ::= '.' id <nested_elem_registro1> | <v_m_access> <nested_elem_registro1> |     !- Última opção é o vazio.
-<nested_elem_registro1> ::= <elem_registro> |                                                           !- Última opção é o vazio.
-!-------------------------------------------------------------
 
 !-------------------------------------------------------------
 ! expressões
@@ -139,16 +117,13 @@ Comment Line  = '%'
 <exprRel>   ::= <exprRelValor> <operatorRel> <exprRel1> | '(' <exprRel> ')' <exprRel2>
 <exprRel1> ::= <exprRelValor> <exprRel2> | '(' <exprRel> ')' <exprRel2>
 <exprRel2> ::= <operatorRel><exprRel1> | <>
-<operatorRel> ::= '==' | '>=' | '<=' | '!=' | '>' | '<'
+<operatorRel> ::= '==' | '>=' | '<=' | '!='
 
 ! Expressões Logicas: !
 ! o valor da comparação logica pode ser uma expressão relacional que por sua vez pode ser uma expressão aritmética o que comtempla o valor unico de id e number
 <exprLogValor> ::= <exprRel> | 'verdadeiro' | 'falso' | 'vazio'
-<exprLog>   ::= <exprLogValor> <operatorLog> <exprLog1> | '(' <exprLog> ')' <exprLog2> | '!' <exprLog1> 
+<exprLog>   ::= <exprLogValor> <operatorLog> <exprLog1> | '(' <exprLog> ')' <exprLog2>
 <exprLog1> ::= <exprLogValor> <exprLog2> | '(' <exprLog1> ')' <exprLog2>
 <exprLog2> ::= <operatorLog><exprLog1> | <>
-<operatorLog> ::= '&&' | '||'
+<operatorLog> ::= '!' | '&&' | '||'
 !-------------------------------------------------------------
-
-
-
