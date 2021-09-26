@@ -142,3 +142,25 @@ Comment Line  = '%'
 <exprLog2> ::= <operatorLog><exprLog1> | <>
 <operatorLog> ::= '!' | '&&' | '||'
 !-------------------------------------------------------------
+
+! Declaração de Registro !
+<declaracao_reg>    ::= registro id '{' <declaracao_reg1> | <se>
+<declaracao_reg1>   ::= <primitive_type> id <declaracao_reg2> | id id <declaracao_reg2> 
+<declaracao_reg2>   ::= ',' id <declaracao_reg2> | ';' <declaracao_reg1> | ';' <declaracao_reg3>
+<declaracao_reg3>   ::= '}' <declaracao_reg> | '}'
+                     
+!-------------------------------------------------------------
+! Acesso de Registro !
+<elem_registro>          ::= id <nested_elem_registro>
+<nested_elem_registro>   ::= '.' id <nested_elem_registro1>
+<nested_elem_registro1>  ::= <nested_elem_registro> | <>
+                          
+!-------------------------------------------------------------
+! Se, Se Senão, Senão !
+<se>                ::= 'se' '(' <exprRel> ')' '{' <se_body> | 'se' '(' id ')' '{' <se_body> | 'se' '(' <exprLog> ')' '{' <se_body> 
+<se_intern_body>    ::= <declaracao_reg> '}' 
+<se_body>           ::= <se_intern_body> |  <se_intern_body> <se> | <se_intern_body> <se_senao> | <se_intern_body> <senao> 
+<se_senao>          ::= 'se senao' '(' id ')' '{' <se_senao_body>
+<se_senao_body>     ::= <se_intern_body> | <se_intern_body> <senao> | <se_intern_body> <se_senao>
+<senao>             ::= 'senao' '{' <se_intern_body>
+!-------------------------------------------------------------
