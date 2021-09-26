@@ -1,13 +1,15 @@
-﻿"Case Senstive" = 'True'
+﻿"Case sensitive" = 'True'
 "Start Symbol"  = <Program>
-                
+               
 id     = {Letter}({AlphaNumeric}|'_')*
 number = {Number}+('.'{Number}+)?
 cad    = '"'( {AlphaNumeric}| [!#$%&()*+,-./:;<=>?@\^_`{|}~]|'['|']' | '\"' )* '"'
-
+boolean = 'verdadeiro' | 'falso'
+                
 Comment Start = '{#'
 Comment End   = '#}'
 Comment Line  = '%'
+
 
 !-------------------------------------------------------------
 !Start of the program
@@ -27,7 +29,7 @@ Comment Line  = '%'
 
 !-------------------------------------------------------------
 ! Values Type
-<value>  ::= number | verdadeiro | falso | cad
+<value>  ::= number | boolean | cad
 !-------------------------------------------------------------
 
 
@@ -88,9 +90,22 @@ Comment Line  = '%'
 ! Declaration of Function Body
 <function_body>         ::= <declaration_const> <function_body1> | <function_body1>
 <function_body1>        ::= <declaration_var>   <function_body2> | <function_body2>
-<function_body2>        ::= retorno                    !- ATENÇÃO: Falta colocar o que será retornado.
+<function_body2>        ::= <com_enquanto> <function_body2> | <com_para> <function_body2> | retorno                    !- ATENÇÃO: Falta colocar o que será retornado.
 !-------------------------------------------------------------
 
+!-------------------------------------------------------------
+! Comand enquanto
+<com_enquanto> ::= enquanto '(' <args> ')' '{' '}'
+<args> ::= <exprRel> | <exprLog> | boolean |
+!-------------------------------------------------------------
+
+!-------------------------------------------------------------
+!Comand para
+<com_para> ::= para '(' <init> ';'  <stop> ';'  <step>  ')' '{' '}'
+<init> ::= <exprRel> 
+<stop> ::= <exprRel> | <exprRel> | boolean |
+<step> ::= <exprRel> | <expr> |
+!-------------------------------------------------------------
 
 !-------------------------------------------------------------
 ! expressões
@@ -113,7 +128,7 @@ Comment Line  = '%'
 
 ! Expressões Relacionais: !
 ! o valor da comparação relacional pode ser uma expressão aritmética o que comtempla o valor unico de id e number
-<exprRelValor> ::= <expr> | 'verdadeiro' | 'falso' | 'vazio'
+<exprRelValor> ::= <expr> | boolean | 'vazio'
 <exprRel>   ::= <exprRelValor> <operatorRel> <exprRel1> | '(' <exprRel> ')' <exprRel2>
 <exprRel1> ::= <exprRelValor> <exprRel2> | '(' <exprRel> ')' <exprRel2>
 <exprRel2> ::= <operatorRel><exprRel1> | <>
@@ -121,7 +136,7 @@ Comment Line  = '%'
 
 ! Expressões Logicas: !
 ! o valor da comparação logica pode ser uma expressão relacional que por sua vez pode ser uma expressão aritmética o que comtempla o valor unico de id e number
-<exprLogValor> ::= <exprRel> | 'verdadeiro' | 'falso' | 'vazio'
+<exprLogValor> ::= <exprRel> | boolean | 'vazio'
 <exprLog>   ::= <exprLogValor> <operatorLog> <exprLog1> | '(' <exprLog> ')' <exprLog2>
 <exprLog1> ::= <exprLogValor> <exprLog2> | '(' <exprLog1> ')' <exprLog2>
 <exprLog2> ::= <operatorLog><exprLog1> | <>
