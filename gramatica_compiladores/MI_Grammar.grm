@@ -90,7 +90,8 @@ Comment Line  = '%'
 ! Declaration of Function Body
 <function_body>         ::= <declaration_const> <function_body1> | <function_body1>
 <function_body1>        ::= <declaration_var>   <function_body2> | <function_body2>
-<function_body2>        ::= <com_enquanto> <function_body2> | <com_para> <function_body2> | retorno                    !- ATENÇÃO: Falta colocar o que será retornado.
+<function_body2>        ::= <com_enquanto> <function_body2> | <com_para> <function_body2> | <se> <function_body2>
+                         | <write_cmd> <function_body2> | <read_cmd> <function_body2> | retorno                    !- ATENÇÃO: Falta colocar o que será retornado.
 !-------------------------------------------------------------
 
 !-------------------------------------------------------------
@@ -103,7 +104,7 @@ Comment Line  = '%'
 !Comand para
 <com_para> ::= para '(' <init> ';'  <stop> ';'  <step>  ')' '{' '}'
 <init> ::= <exprRel> 
-<stop> ::= <exprRel> | <exprRel> | boolean |
+<stop> ::= <exprRel> | boolean |
 <step> ::= <exprRel> | <expr> |
 !-------------------------------------------------------------
 
@@ -167,11 +168,11 @@ Comment Line  = '%'
 
 !-------------------------------------------------------------
 ! Leia e escreva
-<write_cmd>   ::= escreva '(' <write_value> ')' ';'
+<write_cmd>   ::= escreva '(' <write_value> <write_value_list> ')' ';'
 <write_value_list> ::= ',' <write_value> <write_value_list> |
 <write_value> ::= id | num | cad | <vector_matrix> | <elem_registro>
 
-<read_cmd> ::= leia '(' <read_value> ')' ';'
+<read_cmd> ::= leia '(' <read_value> <read_value_list> ')' ';'
 <read_value_list> ::= ',' <read_value> <read_value_list> |
 <read_value> ::= id | <vector_matrix> | <elem_registro>
 !-------------------------------------------------------------
