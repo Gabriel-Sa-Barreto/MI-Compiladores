@@ -1,5 +1,5 @@
 ﻿"Case sensitive" = 'True'
-"Start Symbol"  = <var_atr>
+"Start Symbol"  = <Program>
                
 id     = {Letter}({AlphaNumeric}|'_')*
 number = {Number}+('.'{Number}+)?
