@@ -170,7 +170,7 @@ Comment Line  = '%'
 ! Leia e escreva
 <write_cmd>   ::= escreva '(' <write_value> <write_value_list> ')' ';'
 <write_value_list> ::= ',' <write_value> <write_value_list> |
-<write_value> ::= id | num | cad | <vector_matrix> | <elem_registro>
+<write_value> ::= id | number | cad | <vector_matrix> | <elem_registro>
 
 <read_cmd> ::= leia '(' <read_value> <read_value_list> ')' ';'
 <read_value_list> ::= ',' <read_value> <read_value_list> |
