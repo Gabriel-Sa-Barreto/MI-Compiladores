@@ -30,6 +30,9 @@ funcao inteiro funcao_teste_2 ( Pessoa nova_pessoa, inteiro local_1, real local_
         cadeia   local_c;
         booleano local_d      = verdadeiro; 
     }
+    
+    escreva( local_c, 45, local_a );
+    leia( local_d, local_teste );
     retorno
 }
 
