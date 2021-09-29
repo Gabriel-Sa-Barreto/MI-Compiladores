@@ -198,7 +198,7 @@ Comment Line  = '%'
 !-------------------------------------------------------------
 
 ! Atribuições de Variáveis
-<var_atr> ::= id <atr> | id <v_m_access> <atr>
-<atr> ::= '=' <value> <atr_1> | '=' id <atr_1> | '=' id <v_m_access> <atr_1>
+<var_atr> ::= id <atr> | id <v_m_access> <atr> | id <elem_registro> <atr>
+<atr> ::= '=' <value> <atr_1> | '=' id <atr_1> | '=' id <v_m_access> <atr_1> | '=' id <elem_registro> <atr_1>
 <atr_1> ::= ',' <var_atr> | ';'
 !-------------------------------------------------------------
