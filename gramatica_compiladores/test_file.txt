@@ -93,9 +93,9 @@ funcao vazio algoritmo () {
                 }
            }
         }senao {
-            {#se((2 && 2) ){
-               retorno;
-            }#}
+            se((teste && teste) || (teste || teste) ){
+               retorno (a+b);
+            }
         }    
     }
     retorno;

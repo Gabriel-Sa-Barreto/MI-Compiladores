@@ -116,10 +116,10 @@ Comment Line  = '%'
 <value_with_IDE>     ::= <value_without_IDE> | id
 !-------------------------------------------------------------
 
-<com_body>        ::= <com_enquanto> <com_body> | <com_para> <com_body> | <se> <com_body>
-                         | <write_cmd> <com_body> | <read_cmd> <com_body> | <functionCall> <com_body> | <var_atr> <com_body> | <retornar>
-<retornar> ::= retorno <retornar1> ';' | <>
-<retornar1> ::= boolean | cad | <expressao> | <>
+<com_body>        ::= <com_enquanto> <com_body> | <com_para> <com_body> | <se> <com_body> | <write_cmd> <com_body> | <read_cmd> <com_body> | <functionCall> <com_body> | <var_atr> <com_body> | <com_retornar>                       
+<com_retornar> ::= retorno <com_retornar1> ';' | <>
+<com_retornar1> ::= boolean | cad | <expressao> | <>
+
 
 !-------------------------------------------------------------
 ! Comand enquanto
@@ -166,7 +166,7 @@ Comment Line  = '%'
 
 ! Expressões Logicas: !
 ! o valor da comparação logica pode ser uma expressão relacional que por sua vez pode ser uma expressão aritmética o que comtempla o valor unico de id e number
-<exprLogValor> ::= <exprRel> | boolean
+<exprLogValor> ::= <exprRel> | boolean | <expr>
 <exprLog>   ::= <exprLogValor> <operatorLog> <exprLog1> | '(' <exprLog> ')' <exprLog2> | '!' <exprLog1> 
 <exprLog1> ::= <exprLogValor> <exprLog2> | '(' <exprLog1> ')' <exprLog2>
 <exprLog2> ::= <operatorLog><exprLog1> | <>
@@ -189,11 +189,11 @@ Comment Line  = '%'
                           
 ! Se, Se Senão, Senão !
 <se>                ::= 'se' '(' <se_condition_body>
-<se_condition_body> ::= <exprRel> ')' '{' <se_body> | id ')' '{' <se_body> | <exprLog> ')' '{' <se_body>           
+<se_condition_body> ::= <exprRel> ')' '{' <se_body> | boolean ')' '{' <se_body> | <exprLog> ')' '{' <se_body> | id ')' '{' <se_body>           
 <se_body>           ::= <se_intern_body> |  <se_intern_body> <se> | <se_intern_body> <se_senao> | <se_intern_body> <senao> 
 <se_intern_body>    ::= <com_body> '}' 
 <se_senao>          ::= 'se senao' '(' <se_senao_intern_body>
-<se_senao_intern_body> ::=  <exprLog> ')' '{' <se_senao_body> | <exprRel> ')' '{' <se_senao_body> | boolean ')' '{' <se_senao_body> 
+<se_senao_intern_body> ::=  <exprLog> ')' '{' <se_senao_body> | <exprRel> ')' '{' <se_senao_body> | boolean ')' '{' <se_senao_body> | id ')' '{' <se_senao_body> 
 <se_senao_body>     ::= <se_intern_body> | <se_intern_body> <senao> | <se_intern_body> <se_senao>
 <senao>             ::= 'senao' '{' <se_intern_body>
 !-------------------------------------------------------------
