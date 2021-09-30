@@ -211,6 +211,6 @@ Comment Line  = '%'
 
 ! Atribuições de Variáveis 
 <var_atr> ::= id <atr> | id <v_m_access> <atr> | id <elem_registro> <atr>
-<atr> ::= '=' boolean <atr_1> | '=' cad <atr_1> | '=' char <atr_1> | '=' <expr> <atr_1>
+<atr> ::= '=' boolean <atr_1> | '=' cad <atr_1> | '=' char <atr_1> | '=' <expr> <atr_1> | '=' <functionCall> ',' <var_atr> | '=' <functionCall>
 <atr_1> ::= ',' <var_atr> | ';'
 !-------------------------------------------------------------
