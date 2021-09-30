@@ -71,5 +71,32 @@ funcao vazio algoritmo () {
         inteiro local = 1;
         char    teste;    
     }
+    a = 2;
+    a = Pessoa.idade;
+    a[2] = "Cadeia_de_cadeia";
+    b[2][2] = "Cadeia_de_cadeia";
+    
+    se( (a[1] >= 2) || ((2 + 3*4)/2 <= a[1][0]) && Pessoa.hasCar != falso ) {
+           
+    }
+    senao {
+        se( Pessoa.a[1][1] == verdadeiro ) {
+           b = 2;
+           b = Pessoa.idade;
+           b[2] = "Cadeia_de_cadeia";
+           b[2][2] = "Cadeia_de_cadeia";
+          
+           funcao_teste_1();
+           
+           para( i = 2; i < ((teste + 2)/3)  ; i++ ){
+                se( (a + 2) != 3 ){
+                }
+           }
+        }senao {
+            {#se((2 && 2) ){
+               retorno;
+            }#}
+        }    
+    }
     retorno;
 }
