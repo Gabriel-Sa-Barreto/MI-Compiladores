@@ -36,7 +36,7 @@ variaveis {
 }
 
 funcao inteiro funcao_teste_1 ( ){
-    retorno
+    retorno;
 }
 
 funcao inteiro funcao_teste_2 ( Pessoa nova_pessoa, inteiro local_1, real local_2, cadeia a[], inteiro b[][]){
@@ -51,10 +51,19 @@ funcao inteiro funcao_teste_2 ( Pessoa nova_pessoa, inteiro local_1, real local_
         cadeia   local_c;
         booleano local_d      = verdadeiro; 
     }
+    se ( a == b ) {
+        escreva( local_c, 45, local_a );
+    }
+    se senao ( verdadeiro ) {
+        leia( local_d, local_teste );
+    }
+    senao {
+        escreva( local_c, 45, local_a );
+    }
     
     escreva( local_c, 45, local_a );
     leia( local_d, local_teste );
-    retorno
+    retorno;
 }
 
 funcao vazio algoritmo () {
@@ -62,5 +71,5 @@ funcao vazio algoritmo () {
         inteiro local = 1;
         char    teste;    
     }
-    retorno
+    retorno;
 }

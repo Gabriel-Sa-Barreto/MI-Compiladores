@@ -116,15 +116,20 @@ Comment Line  = '%'
 <value_with_IDE>     ::= <value_without_IDE> | id
 !-------------------------------------------------------------
 
+<com_body>        ::= <com_enquanto> <com_body> | <com_para> <com_body> | <se> <com_body>
+                         | <write_cmd> <com_body> | <read_cmd> <com_body> | <functionCall> <com_body> | <retornar>
+<retornar> ::= retorno <retornar1> ';' | <>
+<retornar1> ::= boolean | cad | <expressao> | <>
+
 !-------------------------------------------------------------
 ! Comand enquanto
-<com_enquanto> ::= enquanto '(' <args> ')' '{' <function_body> '}'
+<com_enquanto> ::= enquanto '(' <args> ')' '{' <com_body> '}'
 <args> ::= <exprRel> | <exprLog> | boolean |
 !-------------------------------------------------------------
 
 !-------------------------------------------------------------
 !Comand para
-<com_para> ::= para '(' <init> ';'  <stop> ';'  <step>  ')' '{' <function_body> '}'
+<com_para> ::= para '(' <init> ';'  <stop> ';'  <step>  ')' '{' <com_body> '}'
 <init> ::= <exprAtr>
 <exprAtr> ::= id '=' number
 <stop> ::= <exprRel> | boolean |
@@ -170,7 +175,7 @@ Comment Line  = '%'
 
 ! Declaração de Registro !
 <declaracao_reg>    ::= registro id '{' <declaracao_reg1> |
-<declaracao_reg1>   ::= <primitive_type> id <declaracao_reg4> <declaracao_reg2> | id id <declaracao_reg2> 
+<declaracao_reg1>   ::= <primitive_type> id <declaracao_reg4> <declaracao_reg2> | id id <declaracao_reg4> <declaracao_reg2> 
 <declaracao_reg2>   ::= ',' id <declaracao_reg2> | ';' <declaracao_reg1> | ';' <declaracao_reg3>
 <declaracao_reg3>   ::= '}' <declaracao_reg>
 <declaracao_reg4>   ::= <v_m_access> |
@@ -183,10 +188,12 @@ Comment Line  = '%'
 !-------------------------------------------------------------
                           
 ! Se, Se Senão, Senão !
-<se>                ::= 'se' '(' <exprRel> ')' '{' <se_body> | 'se' '(' id ')' '{' <se_body> | 'se' '(' <exprLog> ')' '{' <se_body> 
-<se_intern_body>    ::= <function_body> '}' 
+<se>                ::= 'se' '(' <se_condition_body>
+<se_condition_body> ::= <exprRel> ')' '{' <se_body> | id ')' '{' <se_body> | <exprLog> ')' '{' <se_body>           
 <se_body>           ::= <se_intern_body> |  <se_intern_body> <se> | <se_intern_body> <se_senao> | <se_intern_body> <senao> 
-<se_senao>          ::= 'se senao' '(' <exprLog> ')' '{' <se_senao_body> | 'se senao' '(' <exprRel> ')' '{' <se_senao_body> 
+<se_intern_body>    ::= <com_body> '}' 
+<se_senao>          ::= 'se senao' '(' <se_senao_intern_body>
+<se_senao_intern_body> ::=  <exprLog> ')' '{' <se_senao_body> | <exprRel> ')' '{' <se_senao_body> | boolean ')' '{' <se_senao_body> 
 <se_senao_body>     ::= <se_intern_body> | <se_intern_body> <senao> | <se_intern_body> <se_senao>
 <senao>             ::= 'senao' '{' <se_intern_body>
 !-------------------------------------------------------------
