@@ -51,7 +51,7 @@ funcao inteiro funcao_teste_2 ( Pessoa nova_pessoa, inteiro local_1, real local_
         cadeia   local_c;
         booleano local_d      = verdadeiro; 
     }
-    se ( a == b ) {
+    se ( verdadeiro ) {
         escreva( local_c, 45, local_a );
     }
     se senao ( verdadeiro ) {
