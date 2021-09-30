@@ -158,7 +158,7 @@ Comment Line  = '%'
 
 ! Expressões Relacionais: !
 ! o valor da comparação relacional pode ser uma expressão aritmética o que comtempla o valor unico de id e number
-<exprRelValor> ::= <expr> | boolean | 'vazio'
+<exprRelValor> ::= <expr> | boolean
 <exprRel>   ::= <exprRelValor> <operatorRel> <exprRel1> | '(' <exprRel> ')' <exprRel2>
 <exprRel1> ::= <exprRelValor> <exprRel2> | '(' <exprRel> ')' <exprRel2>
 <exprRel2> ::= <operatorRel><exprRel1> | <>
@@ -166,7 +166,7 @@ Comment Line  = '%'
 
 ! Expressões Logicas: !
 ! o valor da comparação logica pode ser uma expressão relacional que por sua vez pode ser uma expressão aritmética o que comtempla o valor unico de id e number
-<exprLogValor> ::= <exprRel> | boolean | 'vazio'
+<exprLogValor> ::= <exprRel> | boolean
 <exprLog>   ::= <exprLogValor> <operatorLog> <exprLog1> | '(' <exprLog> ')' <exprLog2> | '!' <exprLog1> 
 <exprLog1> ::= <exprLogValor> <exprLog2> | '(' <exprLog1> ')' <exprLog2>
 <exprLog2> ::= <operatorLog><exprLog1> | <>
