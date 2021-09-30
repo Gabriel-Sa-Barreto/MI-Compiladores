@@ -1,9 +1,10 @@
 ﻿"Case sensitive" = 'True'
 "Start Symbol"  = <Program>
                
-id     = {Letter}({AlphaNumeric}|'_')*
-number = {Number}+('.'{Number}+)?
-cad    = '"'( {AlphaNumeric}| [!#$%&()*+,-./:;<=>?@\^_`{|}~]|'['|']' | '\"' )* '"'
+id      = {Letter}({AlphaNumeric}|'_')*
+number  = {Number}+('.'{Number}+)?
+cad     = '"'( {AlphaNumeric}| [!#$%&()*+,-./:;<=>?@\^_`{|}~]|'['|']' | '\"' )* '"'
+char    = ['']( {AlphaNumeric}| [!#$%&()*+,-./:;<=>?@\^_`{|}~]|'['|']' | '\['']' ) ['']
 boolean = 'verdadeiro' | 'falso'
                 
 Comment Start = '{#'
@@ -93,7 +94,7 @@ Comment Line  = '%'
 <function_body2>        ::= <com_enquanto> <function_body2> | <com_para> <function_body2> | <se> <function_body2>
                          | <write_cmd> <function_body2> | <read_cmd> <function_body2> | <functionCall> <function_body2> | <var_atr> <function_body2> | <retornar>
 <retornar> ::= retorno <retornar1> ';'
-<retornar1> ::= boolean | cad | <expressao> | <>
+<retornar1> ::= boolean | cad | char | <expressao> | <>
 !-------------------------------------------------------------
              
 !-------------------------------------------------------------
@@ -118,7 +119,7 @@ Comment Line  = '%'
 
 <com_body>        ::= <com_enquanto> <com_body> | <com_para> <com_body> | <se> <com_body> | <write_cmd> <com_body> | <read_cmd> <com_body> | <functionCall> <com_body> | <var_atr> <com_body> | <com_retornar>                       
 <com_retornar> ::= retorno <com_retornar1> ';' | <>
-<com_retornar1> ::= boolean | cad | <expressao> | <>
+<com_retornar1> ::= boolean | cad | char | <expressao> | <>
 
 
 !-------------------------------------------------------------
@@ -201,7 +202,7 @@ Comment Line  = '%'
 ! Leia e escreva
 <write_cmd>   ::= escreva '(' <write_value> <write_value_list> ')' ';'
 <write_value_list> ::= ',' <write_value> <write_value_list> |
-<write_value> ::= id | number | cad | <vector_matrix> | <elem_registro>
+<write_value> ::= id | number | cad | char | <vector_matrix> | <elem_registro>
 
 <read_cmd> ::= leia '(' <read_value> <read_value_list> ')' ';'
 <read_value_list> ::= ',' <read_value> <read_value_list> |
@@ -210,6 +211,6 @@ Comment Line  = '%'
 
 ! Atribuições de Variáveis 
 <var_atr> ::= id <atr> | id <v_m_access> <atr> | id <elem_registro> <atr>
-<atr> ::= '=' boolean <atr_1> | '=' cad <atr_1> | '=' <expr> <atr_1>
+<atr> ::= '=' boolean <atr_1> | '=' cad <atr_1> | '=' char <atr_1> | '=' <expr> <atr_1>
 <atr_1> ::= ',' <var_atr> | ';'
 !-------------------------------------------------------------
