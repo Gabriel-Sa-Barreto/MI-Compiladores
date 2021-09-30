@@ -1,9 +1,30 @@
+registro teste_registro {
+    inteiro a;
+    inteiro d[a];
+    inteiro d[2][2];
+    Pessoa  teste[1][1];
+    Pessoa  teste_1[2];
+    real    b;
+    cadeia  c;
+}
+registro teste_registro_1 {
+    inteiro a,d,e,f;
+    real    b;
+    cadeia  c;
+}
+registro teste_registro_2 {
+    inteiro a,d,e,f;
+    real    b;
+    cadeia  c;
+}
 constantes {
     inteiro a = 2;
     real    b = 2.23,c = 23.40;
 }
 
 variaveis {
+    Pessoa  teste[0];
+    Pessoa  teste[2];
     inteiro teste   = 2;
     real    teste_2 = 2.23,c = 23.40;
     cadeia  c;
