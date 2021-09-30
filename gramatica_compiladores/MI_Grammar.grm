@@ -13,7 +13,7 @@ Comment Line  = '%'
 
 !-------------------------------------------------------------
 !Start of the program
-<Program> ::= <declaracao_reg> <declaration_const> <declaration_var> <function_declaration> | <expressao> ! para testar expressao
+<Program> ::= <declaracao_reg> <declaration_const> <declaration_var> <function_declaration> | <var_atr> | <expressao> ! para testar expressao
 !-------------------------------------------------------------
 
 !------------------------------------------------------------ 
@@ -91,9 +91,11 @@ Comment Line  = '%'
 <function_body>         ::= <declaration_const> <function_body1> | <function_body1>
 <function_body1>        ::= <declaration_var>   <function_body2> | <function_body2>
 <function_body2>        ::= <com_enquanto> <function_body2> | <com_para> <function_body2> | <se> <function_body2>
-                         | <write_cmd> <function_body2> | <read_cmd> <function_body2> | <functionCall> <function_body2> | retorno |                  !- ATENÇÃO: Falta colocar o que será retornado.
+                         | <write_cmd> <function_body2> | <read_cmd> <function_body2> | <functionCall> <function_body2> | <retornar>
+<retornar> ::= retorno <retornar1> ';'
+<retornar1> ::= boolean | cad | <expressao> | <>
 !-------------------------------------------------------------
-
+             
 !-------------------------------------------------------------
 !- Function Call
 <functionCall> ::= id '(' <varList0>
@@ -135,11 +137,12 @@ Comment Line  = '%'
 
 ! Expressões Aritméticas: !
 !<expr0> ::= number <expr2> | id <expr1> | '('<expr>')' <expr4> | <operatorAuto> id <expr4> ! acho que no fim das contas não precisa, um 5 solto em qualquer lugar seria uma exp
-<exprValorMod> ::= id | number
+<exprValorMod> ::=  number| <exprValorModID>
+<exprValorModID> ::= id | id <v_m_access> | id <elem_registro>
 <exprValor> ::= <operatorSoma> <exprValorMod> | <exprValorMod> | '('<expr>')'
 <exprMulti0> ::=  <exprValor> <exprMultiPos>
 <exprMulti> ::= <exprValor> <operatorMulti> <exprMulti0>
-<expr>   ::= <exprMulti> <exprMultiPos> <expr2> | number <expr2> | id <expr1> | '('<expr>')' <expr2> | <operatorAuto> id <expr2>
+<expr>   ::= <exprMulti> <exprMultiPos> <expr2> | number <expr2> | <exprValorModID> <expr1> | '('<expr>')' <expr2> | <operatorAuto> id <expr2>
 <exprMultiPos> ::= <operatorMulti> <exprMulti0> | <>
 <expr1> ::= <operatorSoma><expr> | <operatorAuto><expr2> | <>
 <expr2> ::= <operatorSoma><expr> | <>
@@ -197,8 +200,8 @@ Comment Line  = '%'
 <read_value> ::= id | <vector_matrix> | <elem_registro>
 !-------------------------------------------------------------
 
-! Atribuições de Variáveis
+! Atribuições de Variáveis 
 <var_atr> ::= id <atr> | id <v_m_access> <atr> | id <elem_registro> <atr>
-<atr> ::= '=' <value> <atr_1> | '=' id <atr_1> | '=' id <v_m_access> <atr_1> | '=' id <elem_registro> <atr_1>
+<atr> ::= '=' boolean <atr_1> | '=' cad <atr_1> | '=' <expr> <atr_1>
 <atr_1> ::= ',' <var_atr> | ';'
 !-------------------------------------------------------------
