@@ -83,8 +83,8 @@ funcao vazio algoritmo () {
         se( Pessoa.a[1][1] == verdadeiro ) {
            b = 2;
            b = Pessoa.idade;
-           b[2] = "Cadeia_de_cadeia";
-           b[2][2] = "Cadeia_de_cadeia";
+           b[2] = '\'';
+           b[2][2] = "Cadeia\"_de_cadeia";
           
            funcao_teste_1();
            

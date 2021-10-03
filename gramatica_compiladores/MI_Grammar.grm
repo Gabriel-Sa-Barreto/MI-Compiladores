@@ -4,7 +4,7 @@
 id      = {Letter}({AlphaNumeric}|'_')*
 number  = {Number}+('.'{Number}+)?
 cad     = '"'( {AlphaNumeric}| [!#$%&()*+,-./:;<=>?@\^_`{|}~]|'['|']' | '\"' )* '"'
-char    = ['']( {AlphaNumeric}| [!#$%&()*+,-./:;<=>?@\^_`{|}~]|'['|']' | '\['']' ) ['']
+char    = ['']( {AlphaNumeric}| [!#$%&()*+,-./:;<=>?@\^_`{|}~]|'['|']' | '\'[''] ) ['']
 boolean = 'verdadeiro' | 'falso'
                 
 Comment Start = '{#'
