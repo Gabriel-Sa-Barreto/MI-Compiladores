@@ -14,7 +14,7 @@ Comment Line  = '%'
 
 !-------------------------------------------------------------
 !Start of the program
-<Program> ::= <declaracao_reg> <declaration_const> <declaration_var> <function_declaration> | <var_atr> | <expressao> ! para testar expressao
+<Program> ::= <declaracao_reg> <declaration_const> <declaration_var> <function_declaration>
 !-------------------------------------------------------------
 
 !------------------------------------------------------------ 
@@ -80,11 +80,10 @@ Comment Line  = '%'
 !-------------------------------------------------------------
 ! Declaration of Function Parameters
 <function_parameters>   ::= '(' <function_parameters1> 
-<function_parameters1>  ::= <function_parameters2> id <function_parameters3> | ')'    !- Declara parâmetros ou não.
-<function_parameters2>  ::=      <primitive_type>        | id                         !- tipo primitivo ou um novo tipo criado a partir de um registro.                         
-<function_parameters3>  ::= '['']' <function_parameters4>  | <function_parameters5>   !- verifica se é um vetor ou variável qualquer.
-<function_parameters4>  ::= '['']' <function_parameters5>  | <function_parameters5>   !- verifica se é um vetor ou uma matriz.                                             
-<function_parameters5>  ::= ','  <function_parameters1>  | ')'                        !- verifica se irá declarar outros parâmetros ou irá finalizar.
+<function_parameters1>  ::= <type> id <function_parameters2> | ')'    !- Declara parâmetros ou não.                         
+<function_parameters2>  ::= '['']' <function_parameters3>  | <function_parameters4>   !- verifica se é um vetor ou variável qualquer.
+<function_parameters3>  ::= '['']' <function_parameters4>  | <function_parameters4>   !- verifica se é um vetor ou uma matriz.                                             
+<function_parameters4>  ::= ','  <function_parameters1>  | ')'                        !- verifica se irá declarar outros parâmetros ou irá finalizar.
 !-------------------------------------------------------------
 
 !-------------------------------------------------------------
@@ -176,9 +175,9 @@ Comment Line  = '%'
 
 ! Declaração de Registro !
 <declaracao_reg>    ::= registro id '{' <declaracao_reg1> |
-<declaracao_reg1>   ::= <primitive_type> id <declaracao_reg4> <declaracao_reg2> | id id <declaracao_reg4> <declaracao_reg2> 
-<declaracao_reg2>   ::= ',' id <declaracao_reg2> | ';' <declaracao_reg1> | ';' <declaracao_reg3>
-<declaracao_reg3>   ::= '}' <declaracao_reg>
+<declaracao_reg1>   ::= <type> id <declaracao_reg4> <declaracao_reg2> 
+<declaracao_reg2>   ::= ',' id <declaracao_reg2> | ';' <declaracao_reg3>
+<declaracao_reg3>   ::= '}' <declaracao_reg> | <declaracao_reg1>
 <declaracao_reg4>   ::= <v_m_access> |
 !-------------------------------------------------------------
 
