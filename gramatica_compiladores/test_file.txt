@@ -54,7 +54,7 @@ funcao inteiro funcao_teste_2 ( Pessoa nova_pessoa, inteiro local_1, real local_
     se ( a == b ) {
         escreva( local_c, 45, local_a );
     }
-    se senao ( verdadeiro ) {
+    senao se ( verdadeiro ) {
         leia( local_d, local_teste );
     }
     senao {
@@ -88,7 +88,7 @@ funcao vazio algoritmo () {
           
            funcao_teste_1();
            
-           para( i = 2; i < ((teste + 2)/3)  ; i++ ){
+           para( i = 2 ; i < ((teste + 2)/3)  ; i++ ){
                 se( (a + 2) != 3 ){
                 }
            }
