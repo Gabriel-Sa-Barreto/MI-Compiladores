@@ -93,8 +93,8 @@ Comment Line  = '%'
 !-------------------------------------------------------------
 !- Function Call
 <functionCall> ::= id '(' <varList0> ')' ';'
-<varList0>     ::= <value_without_IDE> <varList2> | <read_value> <varList2> | <>
-<varList1>     ::= <value_without_IDE> <varList2> | <read_value> <varList2>
+<varList0>     ::= <value> <varList2> | <read_value> <varList2> | <>
+<varList1>     ::= <value> <varList2> | <read_value> <varList2>
 <varList2>     ::= ',' <varList1> | <>                                                 !- Finaliza a lista de parâmetros ou conti
 
 !- Vector and Matrix access
@@ -137,10 +137,7 @@ Comment Line  = '%'
 
 ! Expressões Aritméticas: !
 <exprValorMod> ::=  number | <operatorAuto0> <read_value> | <read_value> <operatorAuto> ! um IDE pode ter operações de incremento/decremento
-!<exprValorModID> ::= id <exprValorModIDPos>
-!<exprValorModIDPos> ::= <v_m_access> | <elem_registro> | <>
-<exprValor> ::= <operatorSoma> <exprValorMod> | <exprValorMod>
-<exprMulti> ::= <exprValor> <exprMultiPos>
+<exprMulti> ::= <operatorSoma> <exprValorMod> <exprMultiPos> | <exprValorMod> <exprMultiPos>
 <exprArt>   ::= <exprMulti> <expr1> 
 <exprMultiPos> ::= <operatorMulti> <exprMulti> | <>
 <expr1> ::= <operatorSoma> <exprNumber> | <>
@@ -148,27 +145,21 @@ Comment Line  = '%'
 <operatorMulti> ::= '*' | '/'
 <operatorAuto0> ::= '++' | '--'
 <operatorAuto> ::= '++' | '--' | <>
-!<exprOpArt> ::= <exprMultiPos> <expr1> ! para usar em expressao logica
 
 
 ! Expressões Relacionais: !
 ! o valor da comparação relacional pode ser uma expressão aritmética o que comtempla o valor unico de id e number
-<exprRelValor> ::= <exprArt> | boolean
 <exprRel0>   ::= <exprRel> | '(' <expressao> ')'
-<exprRel>   ::= <exprRelValor> <exprRel1>
+<exprRel>   ::= <exprArt> <exprRel1> | boolean <exprRel1>
 <exprRel1> ::= <operatorRel> <exprRel0> | <>
 <operatorRel> ::= '==' | '>=' | '<=' | '!=' | '>' | '<'
-!<exprOpRel> ::= <operatorRel> <exprRel> ! para usar em expressao logica
 
 ! Expressões Logicas: !
-! o valor da comparação logica pode ser uma expressão relacional que por sua vez pode ser uma expressão aritmética o que comtempla o valor unico de id e number
-<exprLogValor> ::= <exprRel>
-<expressao>   ::= <exprLogValor> <exprLog1> | '(' <expressao> ')' <exprLog2> | '!' <expressao> 
+! o valor da comparação logica pode ser uma expressão relacional que por sua vez pode ser uma expressão aritmética o que comtempla o valor unico de id e number e boolean
+<expressao>   ::= <exprRel> <exprLog1> | '(' <expressao> ')' <exprLog2> | '!' <expressao> 
 <exprLog1> ::=  <operatorLog> <expressao> | <>
-<exprLog2> ::= <operadoresBol> <expressao> | <operadoresArt> <exprArt> | <>
+<exprLog2> ::= <operatorLog> <expressao> | <operatorMulti> <expressao> | <operatorRel> <expressao> | <operatorSoma> <expressao> | <>
 <operatorLog> ::= '&&' | '||'
-<operadoresBol> ::= <operatorLog> | <operatorRel>
-<operadoresArt> ::= <operatorMulti> | <operatorSoma>
 !-------------------------------------------------------------
 
 ! Declaração de Registro !
@@ -181,8 +172,8 @@ Comment Line  = '%'
 
 !- Registry Access
 <elem_registro>         ::= '.' id <nested_elem_registro>
-<nested_elem_registro>  ::= '.' id <nested_elem_registro1> | <v_m_access> <nested_elem_registro1> |     !- Última opção é o vazio.
-<nested_elem_registro1> ::= <elem_registro> |                                                           !- Última opção é o vazio.
+<nested_elem_registro>  ::= '.' id <nested_elem_registro1> | <v_m_access> <nested_elem_registro1> | <>
+<nested_elem_registro1> ::= <elem_registro> | <>
 !-------------------------------------------------------------
                           
 ! Se, Se Senão, Senão !
@@ -193,9 +184,8 @@ Comment Line  = '%'
 !-------------------------------------------------------------
 
 ! Leia e escreva
-<write_cmd>   ::= escreva '(' <write_value> <write_value_list> ')' ';'
-<write_value_list> ::= ',' <write_value> <write_value_list> |
-<write_value> ::= <value_with_expressao>
+<write_cmd>   ::= escreva '(' <value_with_expressao> <write_value_list> ')' ';'
+<write_value_list> ::= ',' <value_with_expressao> <write_value_list> | <>
 
 <read_cmd> ::= leia '(' <read_value> <read_value_list> ')' ';'
 <read_value_list> ::= ',' <read_value> <read_value_list> |
