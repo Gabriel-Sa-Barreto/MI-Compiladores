@@ -98,9 +98,8 @@ Comment Line  = '%'
 <varList2>     ::= ',' <varList1> | <>                                                 !- Finaliza a lista de parâmetros ou conti
 
 !- Vector and Matrix access
-<v_m_access>   ::= '[' <v_m_access1>
-<v_m_access1>  ::=  <exprNumber> ']' <v_m_access2>  !- <v_m_access2> é para verificar se irá usar uma matriz
-<v_m_access2>  ::= '[' <v_m_access1> |    
+<v_m_access>   ::= '[' <exprNumber> ']' <v_m_access1>
+<v_m_access1>  ::= <v_m_access> |    
 !------------------------------------------------------------
 
 !-------------------------------------------------------------
